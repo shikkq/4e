@@ -92,6 +92,7 @@ def send_to_telegram(text):
 # Основная функция
 def main():
     posts = search_vk_posts()
+    print("ищу посты")
     if not posts:
         print("Нет подходящих постов")
         return
