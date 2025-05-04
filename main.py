@@ -52,12 +52,19 @@ def search_vk_posts(query="помощь приют", count=50, cities=CITIES):
         resp = requests.get(url, params=params)
         data = resp.json()
 
+        # Логируем ответы от API
+        print(f"Запрос к VK для города {city}: {resp.url}")
+        print(f"Ответ от VK: {data}")
+
         if "response" in data:
             posts += data["response"].get("items", [])
 
     # Отфильтровываем посты, которые старше двух недель
     two_weeks_ago = datetime.now() - timedelta(days=MAX_POST_AGE_DAYS)
     posts = [post for post in posts if datetime.fromtimestamp(post["date"]) > two_weeks_ago]
+
+    # Логируем оставшиеся посты после фильтрации
+    print(f"После фильтрации по времени: {len(posts)} постов")
 
     return posts
 
